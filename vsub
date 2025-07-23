@@ -1,0 +1,71 @@
+✈️ Cálculo da Razão e Ângulo de Subida de Aeronaves Leves
+
+Este projeto implementa em **MATLAB** um modelo físico baseado nos fundamentos da engenharia aeronáutica para o **cálculo da razão de subida (RC)** e do **ângulo de subida (γ)** de aeronaves leves com motor elétrico e hélice.
+
+📘 Baseado nos livros:
+
+- **Fundamentos da Engenharia Aeronáutica** — Antônio Walter de Miranda  
+- **General Aviation Aircraft Design** — Snorri Gudmundsson
+
+---
+
+## 🎯 Objetivo
+
+Simular e analisar o **desempenho de subida** de uma aeronave leve, utilizando dados aerodinâmicos, parâmetros do motor/hélice, e variações de densidade do ar com a altitude.
+
+---
+
+## ⚙️ Como funciona
+
+O modelo calcula:
+
+1. **Potência disponível** no voo, com base em curvas empíricas de tração.
+2. **Potência requerida** para vencer o arrasto aerodinâmico.
+3. **Razão de subida**: diferença entre potências dividido pelo peso.
+4. **Ângulo de subida**: por meio da relação trigonométrica:
+
+\[
+\gamma = \arcsin\left(\frac{RC}{V}\right)
+\]
+
+---
+
+## 📚 Fundamentos teóricos
+
+- **Tração disponível** \( T(V) \): ajustada por regressão quadrática de testes reais de motores com hélice (ex: SII 4020-540KV com APC 15x8 E).
+- **Potência disponível**:  
+  \[
+  P_{\text{disp}} = T(V) \cdot V
+  \]
+
+- **Potência requerida**:
+  - Coeficiente de sustentação:  
+    \[
+    C_L = \frac{2W}{\rho V^2 S}
+    \]
+  - Coeficiente de arrasto (polar deslocada):  
+    \[
+    C_D = C_{D_{\min}} + K(C_L - C_{L_{\min D}})^2
+    \]
+  - Arrasto:  
+    \[
+    D = \frac{1}{2} \rho V^2 S C_D
+    \quad \Rightarrow \quad
+    P_{\text{req}} = D \cdot V
+    \]
+
+- **Razão de subida**:
+  \[
+  RC = \frac{P_{\text{disp}} - P_{\text{req}}}{W}
+  \]
+
+---
+
+## 🛠️ Estrutura do código
+
+```text
+src/
+├── v_subida.m            # Função principal
+├── PotenciaDisponivel.m  # Potência disponível = tração × velocidade
+├── TracaoDisponivel.m    # Curvas empíricas de tração vs. velocidade
+└── PotenciaRequerida.m   # Potência requerida baseada em aerodinâmica
