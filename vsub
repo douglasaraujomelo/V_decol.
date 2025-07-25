@@ -1,21 +1,21 @@
-✈️ Cálculo da Razão e Ângulo de Subida de Aeronaves Leves
+Cálculo da Razão e Ângulo de Subida de Aeronaves Leves
 
 Este projeto implementa em **MATLAB** um modelo físico baseado nos fundamentos da engenharia aeronáutica para o **cálculo da razão de subida (RC)** e do **ângulo de subida (γ)** de aeronaves leves com motor elétrico e hélice.
 
-📘 Baseado nos livros:
+Baseado nos livros:
 
 - **Fundamentos da Engenharia Aeronáutica** — Antônio Walter de Miranda  
 - **General Aviation Aircraft Design** — Snorri Gudmundsson
 
 ---
 
-## 🎯 Objetivo
+##  Objetivo
 
 Simular e analisar o **desempenho de subida** de uma aeronave leve, utilizando dados aerodinâmicos, parâmetros do motor/hélice, e variações de densidade do ar com a altitude.
 
 ---
 
-## ⚙️ Como funciona
+##  Como funciona
 
 O modelo calcula:
 
@@ -30,7 +30,7 @@ O modelo calcula:
 
 ---
 
-## 📚 Fundamentos teóricos
+##  Fundamentos teóricos
 
 - **Tração disponível** \( T(V) \): ajustada por regressão quadrática de testes reais de motores com hélice (ex: SII 4020-540KV com APC 15x8 E).
 - **Potência disponível**:  
@@ -61,7 +61,7 @@ O modelo calcula:
 
 ---
 
-## 🛠️ Estrutura do código
+##  Estrutura do código
 
 ```text
 src/
