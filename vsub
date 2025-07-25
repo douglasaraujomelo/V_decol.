@@ -57,7 +57,6 @@ CD = CDmin + K*(CL - CLminD).^2;
 Ars = 0.5*densidade*AreaAsa*CD.*V.^2;
 Prq = Ars .* V;                                       
 
- 
 
 - **Razão de subida**:
 
