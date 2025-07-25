@@ -4,25 +4,21 @@ Este projeto implementa em **MATLAB** um modelo físico baseado nos fundamentos 
 
 Baseado nos livros:
 
-- **Fundamentos da Engenharia Aeronáutica** — Antônio Walter de Miranda  
-- **General Aviation Aircraft Design** — Snorri Gudmundsson
+Fundamentos da Engenharia Aeronáutica — Antônio Walter de Miranda  
+General Aviation Aircraft Design — Snorri Gudmundsson
 
---
-
-##  Objetivo
+Objetivo
 
 Simular e analisar o **desempenho de subida** de uma aeronave leve, utilizando dados aerodinâmicos, parâmetros do motor/hélice, e variações de densidade do ar com a altitude.
 
----
-
-##  Como funciona
+Como funciona
 
 O modelo calcula:
 
-1. **Potência disponível** no voo, com base em curvas empíricas de tração.
-2. **Potência requerida** para vencer o arrasto aerodinâmico.
-3. **Razão de subida**: diferença entre potências dividido pelo peso.
-4. **Ângulo de subida**: 
+1. Potência disponível no voo, com base em curvas empíricas de tração.
+2. Potência requerida para vencer o arrasto aerodinâmico.
+3. Razão de subida: diferença entre potências dividido pelo peso.
+4. Ângulo de subida: 
 gravidade = 9.81;
 potenciaDisponivel = PotenciaDisponivel(V,densidade);
 potenciaRequerida = PotenciaRequerida(V,MTOW,densidade,AreaAsa,CDmin,K,CLminD);
@@ -30,11 +26,10 @@ RC = (potenciaDisponivel - potenciaRequerida)/(MTOW*gravidade);
 AnguloSubida_rad = asin(RC/V);
 AnguloSubida = rad2deg(AnguloSubida_rad); 
 end
----
 
-##  Fundamentos teóricos
+Fundamentos teóricos
 
-- **Tração disponível**:
+Tração disponível:
 A = 000;                                                            
 B = 000;                                                               
 C = 000; 
@@ -42,14 +37,14 @@ densidade_Local = 000;
 tracaoDisponivel = ((densidade_sjc/densidade_Local) * (A*V.^2 + B + C)*(9.81));
 end
 
-- **Potência disponível**:  
+Potência disponível:  
   
- function potenciaDisponivel = PotenciaDisponivel( V,densidade )
+function potenciaDisponivel = PotenciaDisponivel( V,densidade )
 tracaoDisponivel = TracaoDisponivel(V,densidade);
 potenciaDisponivel = tracaoDisponivel*V; 
 end
 
-- **Potência requerida**:
+Potência requerida:
 
 gravidade = 9.81;
 CL = (2*MTOW*gravidade)./(densidade*AreaAsa*V.^2);                    
@@ -57,8 +52,7 @@ CD = CDmin + K*(CL - CLminD).^2;
 Ars = 0.5*densidade*AreaAsa*CD.*V.^2;
 Prq = Ars .* V;                                       
 
-
-- **Razão de subida**:
+Razão de subida:
 
 gravidade = 9.81;
 potenciaDisponivel = PotenciaDisponivel(V,densidade);
@@ -68,10 +62,8 @@ AnguloSubida_rad = asin(RC/V);
 AnguloSubida = rad2deg(AnguloSubida_rad);
 end
 
-##  Estrutura do código
+Estrutura do código
 
-```text
-src/
 ├── v_subida.m            # Função principal
 ├── PotenciaDisponivel.m  # Potência disponível = tração × velocidade
 ├── TracaoDisponivel.m    # Curvas empíricas de tração vs. velocidade
