@@ -22,44 +22,52 @@ O modelo calcula:
 1. **Potência disponível** no voo, com base em curvas empíricas de tração.
 2. **Potência requerida** para vencer o arrasto aerodinâmico.
 3. **Razão de subida**: diferença entre potências dividido pelo peso.
-4. **Ângulo de subida**: por meio da relação trigonométrica:
-
-\[
-\gamma = \arcsin\left(\frac{RC}{V}\right)
-\]
-
+4. **Ângulo de subida**: 
+gravidade = 9.81;
+potenciaDisponivel = PotenciaDisponivel(V,densidade);
+potenciaRequerida = PotenciaRequerida(V,MTOW,densidade,AreaAsa,CDmin,K,CLminD);
+RC = (potenciaDisponivel - potenciaRequerida)/(MTOW*gravidade);
+AnguloSubida_rad = asin(RC/V);
+AnguloSubida = rad2deg(AnguloSubida_rad); 
+end
 ---
 
 ##  Fundamentos teóricos
 
-- **Tração disponível** \( T(V) \): ajustada por regressão quadrática de testes reais de motores com hélice (ex: SII 4020-540KV com APC 15x8 E).
+- **Tração disponível**:
+A = 000;                                                            
+B = 000;                                                               
+C = 000; 
+densidade_Local = 000;                                               
+tracaoDisponivel = ((densidade_sjc/densidade_Local) * (A*V.^2 + B + C)*(9.81));
+end
+
 - **Potência disponível**:  
-  \[
-  P_{\text{disp}} = T(V) \cdot V
-  \]
+  
+ function potenciaDisponivel = PotenciaDisponivel( V,densidade )
+tracaoDisponivel = TracaoDisponivel(V,densidade);
+potenciaDisponivel = tracaoDisponivel*V; 
+end
 
 - **Potência requerida**:
-  - Coeficiente de sustentação:  
-    \[
-    C_L = \frac{2W}{\rho V^2 S}
-    \]
-  - Coeficiente de arrasto (polar deslocada):  
-    \[
-    C_D = C_{D_{\min}} + K(C_L - C_{L_{\min D}})^2
-    \]
-  - Arrasto:  
-    \[
-    D = \frac{1}{2} \rho V^2 S C_D
-    \quad \Rightarrow \quad
-    P_{\text{req}} = D \cdot V
-    \]
+
+gravidade = 9.81;
+CL = (2*MTOW*gravidade)./(densidade*AreaAsa*V.^2);                    
+CD = CDmin + K*(CL - CLminD).^2;                                           
+Ars = 0.5*densidade*AreaAsa*CD.*V.^2;
+Prq = Ars .* V;                                       
+
+ 
 
 - **Razão de subida**:
-  \[
-  RC = \frac{P_{\text{disp}} - P_{\text{req}}}{W}
-  \]
 
----
+gravidade = 9.81;
+potenciaDisponivel = PotenciaDisponivel(V,densidade);
+potenciaRequerida = PotenciaRequerida(V,MTOW,densidade,AreaAsa,CDmin,K,CLminD);
+RC = (potenciaDisponivel - potenciaRequerida)/(MTOW*gravidade);
+AnguloSubida_rad = asin(RC/V); 
+AnguloSubida = rad2deg(AnguloSubida_rad);
+end
 
 ##  Estrutura do código
 
